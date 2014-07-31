@@ -4,14 +4,22 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongo = require('mongoskin'); 
+var db = mongo.db("mongodb://localhost:27017/app", {native_parser:true});
 
+// routes (controllers)
 var home = require('./routes/index');
 var users = require('./routes/users');
 var things = require('./routes/things');
 
 var app = express();
 
-// view engine setup
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
+
+// views
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
