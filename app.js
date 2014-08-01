@@ -4,7 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongo = require('mongoskin'); 
+var mongo = require('mongoskin'); // added mongoskin to connect to local mongodb instance
 var db = mongo.db("mongodb://localhost:27017/app", {native_parser:true});
 
 // routes (controllers)
@@ -14,6 +14,7 @@ var things = require('./routes/things');
 
 var app = express();
 
+// make the db connexion available to the rest object
 app.use(function(req,res,next){
     req.db = db;
     next();
